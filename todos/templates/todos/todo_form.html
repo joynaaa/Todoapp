@@ -1,0 +1,36 @@
+{% extends 'todos/base.html' %}
+
+{% block title %}{% if form.instance.pk %}Edit{% else %}Create{% endif %} Todo{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        <h1>{% if form.instance.pk %}Edit Todo{% else %}Create New Todo{% endif %}</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group mb-3">
+                <label for="{{ form.title.id_for_label }}">Title</label>
+                {{ form.title }}
+                {% if form.title.errors %}
+                    <div class="alert alert-danger mt-2">{{ form.title.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group mb-3">
+                <label for="{{ form.description.id_for_label }}">Description</label>
+                {{ form.description }}
+                {% if form.description.errors %}
+                    <div class="alert alert-danger mt-2">{{ form.description.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-check mb-3">
+                {{ form.completed }}
+                <label class="form-check-label" for="{{ form.completed.id_for_label }}">
+                    Mark as completed
+                </label>
+            </div>
+            <button type="submit" class="btn btn-success">Save</button>
+            <a href="{% url 'todo-list' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
